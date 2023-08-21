@@ -3,18 +3,12 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     const MaterialApp(
-      home: ShoppingList(
-        products: [
-          Product(name: "Eggs"),
-          Product(name: "Flour"),
-          Product(name: "Chocolate chips"),
-        ],
-      ),
+      title: "Flutter layout demo",
+      home:MyApp(),
     ),
   );
 }
 
-//
 class Product {
   const Product({required this.name});
 
@@ -169,13 +163,54 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+
+    // 定义widget
+    Widget titleSelection = Container(
+      padding: const EdgeInsets.all(32),
+      child: Row(
+        children: [
+          Expanded(child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: const Text(
+                  "Oeschinen Lake Campground",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Text(
+                "Kandersteg, Switzerland",
+                style: TextStyle(
+                  color: Colors.grey[500],
+                ),
+              )
+            ],
+          )
+          ),
+          Icon(
+            Icons.star,
+            color: Colors.red[500],
+          ),
+          const Text("41"),
+        ],
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+
+    return MaterialApp(
+      title: 'Flutter layout demo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Flutter layout demo'),
+        ),
+        body: Column(
+          children: [
+            titleSelection,
+          ],
+        ),
+      ),
     );
   }
 }
