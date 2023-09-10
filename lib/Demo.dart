@@ -151,3 +151,160 @@ class LongListView extends StatelessWidget {
     );
   }
 }
+
+class Location{
+   final String imageUrl;
+   final String name;
+   final String place;
+  Location(this.imageUrl,this.name,this.place);
+}
+
+class ParallaxRecipe extends StatelessWidget{
+  const ParallaxRecipe({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    String picUrl= "https://img95.699pic.com/photo/60037/3151.jpg_wh300.jpg";
+    const title = "CustomScrollView";
+    final List<Location> Locations =  List.generate(100, (index) => Location(picUrl, "银杏树$index", "银杏树"));
+
+    return  SingleChildScrollView(
+      child: Column(
+        children: [
+            for (final location in Locations)
+              LocationListItem(
+                imageUrl: location.imageUrl,
+                name: location.name,
+                country: location.place,
+              )
+        ],
+      ),
+    );
+  }
+}
+
+class MyCustomApp extends StatelessWidget {
+  const MyCustomApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    const Color darkBlue = Color.fromARGB(255, 18, 32, 47);
+    return MaterialApp(
+      theme: ThemeData.dark().copyWith(scaffoldBackgroundColor: darkBlue),
+      debugShowCheckedModeBanner: false,
+      home: const Scaffold(
+        body: Center(
+          child: ParallaxRecipe(),
+        ),
+      ),
+    );
+  }
+}
+
+
+class ParallaxFlowDelegate extends FlowDelegate{
+  ParallaxFlowDelegate();
+
+  @override
+  BoxConstraints getConstraintsForChild(int i, BoxConstraints constraints) {
+    return BoxConstraints.tightFor(
+      width: constraints.maxWidth,
+    );
+  }
+
+  @override
+  void paintChildren(FlowPaintingContext context) {
+
+  }
+
+  @override
+  bool shouldRepaint(covariant FlowDelegate oldDelegate) {
+   return true;
+  }
+
+}
+
+class LocationListItem extends StatelessWidget{
+  final String imageUrl;
+  final String name;
+  final String country;
+
+  const LocationListItem({
+    super.key,
+  required this.imageUrl,
+  required this.name,
+  required this.country});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 16),
+        child: AspectRatio(
+          aspectRatio: 16/9,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Stack(
+              children: [
+                _buildParallaxBackground(context),
+                _buildGradient(),
+                _buildTitleAndSubtitle()
+              ],
+            ),
+          ),
+        ),
+    );
+  }
+
+  Widget _buildParallaxBackground(BuildContext context){
+    return Positioned.fill(child: Image.network(
+      imageUrl,
+      fit: BoxFit.cover,
+    ));
+  }
+  
+  Widget _buildGradient(){
+    return Positioned.fill(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.transparent,Colors.black.withOpacity(0.7)],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              stops: const[0.6,0.95]
+            )
+          ),
+        )
+    );
+  }
+
+  Widget _buildTitleAndSubtitle(){
+    return Positioned(
+        left: 20,
+        bottom: 20,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(name,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+          ),
+          ),
+          Text(name,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+}
+
+
+
+
