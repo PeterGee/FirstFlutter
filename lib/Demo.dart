@@ -305,6 +305,21 @@ class LocationListItem extends StatelessWidget{
 
 }
 
+class FirstPage extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("first page"),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(30)
+      ),
+    );
+  }
+
+}
+
 
 
 
