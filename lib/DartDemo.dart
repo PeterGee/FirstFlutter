@@ -293,3 +293,108 @@ class DrawerState extends State<MyDrawerStateWidget> {
         ),
       );
 }
+
+// listView使用
+class ListViewWidget extends StatelessWidget{
+  final List<String> items;
+
+   ListViewWidget({required this.items});
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Flutter",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("ListView Demo"),
+        ),
+        body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context,index){
+            return Container(
+              decoration: const BoxDecoration(
+                border: Border(bottom: BorderSide(
+                  width: 1,
+                  color: Colors.blueGrey
+                ))
+              ),
+              child: ListTile(
+                leading: const Icon(Icons.access_time),
+                title: Text(items[index]),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+}
+
+// GridView 使用
+class GridViewWidget extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Flutter GridView",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("GridView demo"),
+        ),
+        body: GridView.count(crossAxisCount: 3,
+        children:const <Widget> [
+          ListTile(
+            title: Text("item1"),
+          ),
+          ListTile(
+            title: Text("item2"),
+          ),
+          ListTile(
+            title: Text("item3"),
+          ),
+          ListTile(
+            title: Text("item4"),
+          ),
+          ListTile(
+            title: Text("item5"),
+          ),
+          ListTile(
+            title: Text("item6"),
+          ),
+        ],),
+      ),
+    );
+  }
+
+}
+
+class PagerViewWidget extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Flutter",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("pagerViewDemo"),
+        ),
+        body: PageView(
+          onPageChanged: (index){
+            print("当前为第$index 页");
+          },
+          children:const <Widget> [
+            ListTile(
+              title: Text("第一页"),
+            ),
+            ListTile(
+              title: Text("第二页"),
+            ),
+            ListTile(
+              title: Text("第三页"),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+}
