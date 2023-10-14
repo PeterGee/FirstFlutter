@@ -398,3 +398,75 @@ class PagerViewWidget extends StatelessWidget{
   }
 
 }
+
+class GestureDetectorWidget extends StatelessWidget{
+  const GestureDetectorWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("GestureDetector"),
+        ),
+        body: Center(
+          child: GestureDetector(
+            child: const Text("手势识别"),
+            onTap: (){
+              print("点击");
+            },
+            onDoubleTap: (){
+              print("双击");
+            },
+            onLongPress: (){
+              print("长按");
+            },
+            onHorizontalDragStart: (DragStartDetails details){
+              print("水平拖动");
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+}
+
+// 滑动删除
+class DismissibleWidget extends StatelessWidget{
+
+  final List<String> items;
+
+  const DismissibleWidget({required this.items});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Flutter",
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text("DismissibleWidget demo"),
+        ),
+        body: ListView.builder(
+            itemCount: items.length,
+            itemBuilder:(context,index){
+              final item = items[index];
+              return Dismissible(
+                  key: Key(item),
+                  onDismissed: (direction){
+                    items.remove(index);
+                    print(index);
+                  },
+                  child: ListTile(
+                    leading: const Icon(Icons.access_time),
+                    title: Text(items[index]),
+                  )
+              );
+            }
+        ),
+      ),
+    );
+  }
+
+}
