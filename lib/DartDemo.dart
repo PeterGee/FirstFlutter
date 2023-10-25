@@ -1,4 +1,7 @@
+import 'dart:convert' show json;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ZeroPage extends StatelessWidget {
   const ZeroPage({super.key});
@@ -470,3 +473,69 @@ class DismissibleWidget extends StatelessWidget{
   }
 
 }
+
+// 读取assets文件
+class AssetsWidget extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+   return MaterialApp(
+     title: "flutter",
+     home: Scaffold(
+       appBar: AppBar(
+         title: const Text("加载文本示例"),
+       ),
+       body: JsonWidget(),
+     ),
+   );
+  }
+
+}
+
+class JsonWidget extends StatefulWidget {
+
+  @override
+  State<StatefulWidget> createState() {
+    return _JsonWidgetState();
+  }
+}
+
+
+Future<String> loadAsset() async {
+  return await rootBundle.loadString('assets/swordsmen.json');
+}
+
+class _JsonWidgetState extends State<JsonWidget>{
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(future: DefaultAssetBundle.of(context).loadString("assets/swordsmen.json"),
+      builder:(context,snapshot){
+        if(!snapshot.hasData){
+          print("没有数据");
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }else{
+          print("有数据");
+          List<dynamic> data = json.decode(snapshot.data.toString());
+          return ListView.builder(itemCount: data.length,
+            itemBuilder: (BuildContext context,int index){
+            return Card(
+              child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Text("名字:${data[index]["name"]}"),
+                Text("绝学:${data[index]["gongfu"]}")
+              ],
+            ),);
+          },);
+        }
+      });
+  }
+}
+
+
+
+
+
+
