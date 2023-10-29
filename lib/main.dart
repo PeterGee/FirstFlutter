@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:helloflutter/WidgetDemo.dart';
-
-import 'AssetsTest.dart';
+import 'package:helloflutter/NetRequestDemo.dart';
 
 
 
 void main() {
   runApp(
-       const FlexWidget()
+        const MyNetApp()
   );
 }
 
