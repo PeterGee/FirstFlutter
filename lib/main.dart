@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:helloflutter/NetRequestDemo.dart';
-
-
+import 'FlutterAnim.dart';
 
 void main() {
   runApp(
-        const MyNetApp()
+        const MaterialApp(home: CustomButton("label"),)
   );
 }
 
