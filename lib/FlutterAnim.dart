@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class FadeAnimWidget extends StatelessWidget{
@@ -132,4 +131,42 @@ class CustomButton extends StatelessWidget{
   }
 
 }
+
+// Intent跳转页面
+class IntentPage extends StatelessWidget{
+  const IntentPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      routes: <String,WidgetBuilder>{
+        '/a':(context)=> const IntentFirstPage("a Page"),
+        '/b':(context)=> const IntentFirstPage("b Page"),
+      },
+      initialRoute: '/a',
+    );
+  }
+
+}
+
+ class IntentFirstPage extends StatelessWidget{
+  final String name;
+  const IntentFirstPage(this.name,{super.key});
+
+  @override
+  Widget build(BuildContext context) {
+     return Scaffold(
+       appBar: AppBar(
+         title: Text(name),
+       ),
+       body: ElevatedButton(
+         onPressed: (){
+           Navigator.of(context).pushNamed('/b');
+         },
+         child: const Text("IntentPage"),
+       ),
+     );
+  }
+
+ }
 
