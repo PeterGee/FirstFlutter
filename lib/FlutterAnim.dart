@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart'as http;
 
 class FadeAnimWidget extends StatelessWidget{
   const FadeAnimWidget({super.key});
@@ -161,12 +162,41 @@ class IntentPage extends StatelessWidget{
        ),
        body: ElevatedButton(
          onPressed: (){
-           Navigator.of(context).pushNamed('/b');
+           // Navigator.of(context).pushNamed('/b');
+           getNetData();
          },
          child: const Text("IntentPage"),
        ),
      );
   }
 
+  Future<void> getNetData() async {
+    var dataURL = Uri.parse('https://jsonplaceholder.typicode.com/posts');
+    http.Response response = await http.get(dataURL);
+    print("response== ${response.body}");
+    }
+
+
  }
+
+class IntentSecondPage extends StatelessWidget{
+  final String name;
+  const IntentSecondPage(this.name,{super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(name),
+      ),
+      body: ElevatedButton(
+        onPressed: (){
+          Navigator.of(context).pop("SecondBack");
+        },
+        child: const Text("SecondBack"),
+      ),
+    );
+  }
+
+}
 
